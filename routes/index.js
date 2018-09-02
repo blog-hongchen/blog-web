@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var ss = require('../view/index');
+var blog = require('../view/index');
 
 /* GET home page. */
-router.get('/test', ss.test);
+router.get('/api/blogList', blog.blogList);
 
 module.exports = router;
