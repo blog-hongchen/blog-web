@@ -5,7 +5,8 @@ var config = {
 	host: '39.105.12.25',
 	user: 'test',
 	password: '123456',
-	database: 'test'
+	database: 'test',
+	multipleStatements: true
 };
 var pool;
 

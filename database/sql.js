@@ -1,5 +1,5 @@
 module.exports = {
-	// "selectTest": "select * from blog where title like '%?%' or content like '%?%' LIMIT ?,?;"
-	"selectBlog": "select * from blog LIMIT ?,?;",
-	"selectAllBlog": "select * from blog;"
+	"selectBlogTitle": "select * from blog where state=1;select * from blog where title like '%?%' or content like '%?%' and state=1 order by create_time desc limit ?,?;",
+	"selectBlog": "select * from blog where state=1;select * from blog where state=1 order by create_time desc limit ?,?;",
+	"selectAllBlog": "select * from blog where state=1;"
 }

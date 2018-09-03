@@ -4,7 +4,7 @@ function selectBlogList(pool, sql, sqlParams, callback) {
 			callback(err, null, null);
 			throw err;
 		}
-		connection.query(sql, sqlParams, function (error, result, fields) {
+		var test = connection.query(sql, sqlParams, function (error, result, fields) {
 			connection.release();
 			if (error) {
 				callback(error, null, null);
@@ -12,6 +12,7 @@ function selectBlogList(pool, sql, sqlParams, callback) {
 			}
 			callback(error, result, fields);
 		});
+		console.log("test", test.sql)
 	});
 }
 
