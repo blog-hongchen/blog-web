@@ -4,5 +4,6 @@ var blog = require('../view/index');
 
 /* GET home page. */
 router.get('/api/blogList', blog.blogList);
+router.post('/api/blog', blog.updateBlog);
 
 module.exports = router;

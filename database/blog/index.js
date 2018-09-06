@@ -12,7 +12,6 @@ function selectBlogList(pool, sql, sqlParams, callback) {
 			}
 			callback(error, result, fields);
 		});
-		console.log("test", test.sql)
 	});
 }
 

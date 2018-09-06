@@ -10,7 +10,7 @@ function blogList(req, res, next) {
 	}
 	sqlParams.push((req.query.page - 1) * req.query.size);
 	sqlParams.push(req.query.size * 1);
-	db.selectBlogList(sqlStr, sqlParams, function (error, result, fields) {
+	db.ParamsConnection(sqlStr, sqlParams, function (error, result, fields) {
 		var response = {
 			data: result[1],
 			code: 200,
@@ -25,5 +25,28 @@ function blogList(req, res, next) {
 	});
 }
 
+function updateBlog(req, res, next) {
+// 输出 JSON 格式
+	let sqlParams = [], sqlStr = sql.updateBlog;
+	sqlParams.push(req.body.title);
+	sqlParams.push(req.body.article);
+	sqlParams.push(req.body.classification * 1);
+	sqlParams.push(req.body.id * 1);
+	db.ParamsConnection(sqlStr, sqlParams, function (error, result, fields) {
+		var response = {
+			data: result,
+			code: 200,
+			message: error
+		};
+		if (error) {
+			response.code = 500;
+			res.end(JSON.stringify(response));
+		}
+		res.end(JSON.stringify(response));
+	});
+}
 
-module.exports.blogList = blogList;
+module.exports = {
+	blogList,
+	updateBlog
+};

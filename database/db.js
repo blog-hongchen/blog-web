@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-var blog = require('./blog/index');
 
 var config = {
 	host: '39.105.12.25',
@@ -31,15 +30,42 @@ function handleError(err) {
 	}
 }
 
-var selectBlogList = function (sql, sqlParams, callback) {
-	blog.selectBlogList(pool, sql, sqlParams, callback)
+var ParamsConnection = function (sql, sqlParams, callback) {
+	pool.getConnection(function (err, connection) {
+		if (err) {
+			callback(err, null, null);
+			throw err;
+		}
+		var test = connection.query(sql, sqlParams, function (error, result, fields) {
+			connection.release();
+			if (error) {
+				callback(error, null, null);
+				throw error;
+			}
+			callback(error, result, fields);
+		});
+	});
+
 }
-var selectAllBlogList = function (sql, callback) {
-	blog.selectAllBlogList(pool, sql, callback)
+var Connection = function (sql, callback) {
+	pool.getConnection(function (err, connection) {
+		if (err) {
+			callback(err, null, null);
+			throw err;
+		}
+		connection.query(sql, function (error, result, fields) {
+			connection.release();
+			if (error) {
+				callback(error, null, null);
+				throw error;
+			}
+			callback(error, result, fields);
+		});
+	});
 }
 
 module.exports = {
-	selectBlogList,
-	selectAllBlogList
+	ParamsConnection,
+	Connection
 };
 
