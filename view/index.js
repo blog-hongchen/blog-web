@@ -3,10 +3,10 @@ var sql = require('../database/sql.js');
 
 function blogList(req, res, next) {
 	// 输出 JSON 格式
-	let sqlParams = [], sqlStr = sql.selectBlog;
+	let sqlParams = [], sqlStr = sql.selectBlogList;
 	if (req.query.title) {
 		sqlParams.push(req.query.title);
-		sqlStr = sql.selectBlogTitle;
+		sqlStr = sql.selectBlogByTitle;
 	}
 	sqlParams.push((req.query.page - 1) * req.query.size);
 	sqlParams.push(req.query.size * 1);
@@ -23,6 +23,32 @@ function blogList(req, res, next) {
 		}
 		res.end(JSON.stringify(response));
 	});
+}
+
+function blogItem(req, res, next) {
+// 输出 JSON 格式
+	let sqlParams = [], sqlStr = sql.selectBlog;
+	let response = {
+		data: "",
+		code: 500,
+		message: "获取数据失败"
+	};
+	if (req.query.id) {
+		sqlParams.push(req.query.id);
+		db.ParamsConnection(sqlStr, sqlParams, function (error, result, fields) {
+			response.data = result[0];
+			response.code = 200;
+			response.message = error;
+			if (error) {
+				response.code = 500;
+				res.end(JSON.stringify(response));
+			}
+			res.end(JSON.stringify(response));
+		});
+	} else {
+		response.code = 500;
+		res.end(JSON.stringify(response));
+	}
 }
 
 function updateBlog(req, res, next) {
@@ -48,5 +74,6 @@ function updateBlog(req, res, next) {
 
 module.exports = {
 	blogList,
+	blogItem,
 	updateBlog
 };

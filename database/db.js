@@ -30,6 +30,7 @@ function handleError(err) {
 	}
 }
 
+//带查询条件
 var ParamsConnection = function (sql, sqlParams, callback) {
 	pool.getConnection(function (err, connection) {
 		if (err) {
@@ -47,6 +48,7 @@ var ParamsConnection = function (sql, sqlParams, callback) {
 	});
 
 }
+//不带查询条件
 var Connection = function (sql, callback) {
 	pool.getConnection(function (err, connection) {
 		if (err) {
